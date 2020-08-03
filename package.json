@@ -1,7 +1,7 @@
 {
   "name": "validate",
   "version": "0.0.1",
-  "main": "index.js",
+  "main": "src/validate.js",
   "repository": "git@github.com:stackkit/validate.git",
   "author": "larsvankleef <larsvankleef@outlook.com>",
   "license": "MIT",
