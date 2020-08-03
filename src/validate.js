@@ -31,5 +31,6 @@ function isEmpty(obj) {
 }
 
 module.exports = {
-  validate
+  validate,
+  ...require('./validation/index.js')
 }
