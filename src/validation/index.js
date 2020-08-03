@@ -1,4 +1,4 @@
-function number (x, { max, min } = {}) {
+function number(x, { max, min } = {}) {
   if (min || max) {
     if (Number(x) === x) {
       if (x >= min && x <= max) return true
@@ -7,19 +7,19 @@ function number (x, { max, min } = {}) {
     }
   }
 
-  if (Number(x) === x && (min === undefined && max === undefined)) {
+  if (Number(x) === x && min === undefined && max === undefined) {
     return true
   }
 
   return false
 }
 
-function email (x) {
+function email(x) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
   return emailRegex.test(x)
 }
 
-function length (x, { min, max }) {
+function length(x, { min, max }) {
   const length = x.length
 
   if (length >= min && length <= max) return true

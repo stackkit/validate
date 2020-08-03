@@ -6,9 +6,13 @@ it('initializes', () => {
   const fields = {}
   const rules = {}
 
-  validate(fields, {
-    rules,
-  }, callback)
+  validate(
+    fields,
+    {
+      rules,
+    },
+    callback,
+  )
 })
 
 it('calls the correct validation checks and calls them with the current value', () => {
@@ -17,7 +21,7 @@ it('calls the correct validation checks and calls them with the current value', 
 
   const fields = {
     email,
-    password
+    password,
   }
 
   const emailValidator = jest.fn(() => true)
@@ -26,12 +30,12 @@ it('calls the correct validation checks and calls them with the current value', 
   const rules = {
     fields: {
       email: {
-        validator: emailValidator
+        validator: emailValidator,
       },
       password: {
-        validator: passwordValidator
-      }
-    }
+        validator: passwordValidator,
+      },
+    },
   }
 
   const { valid } = validate(fields, {
@@ -53,17 +57,18 @@ it('shows a message when a field is entered but there are no rules for it', () =
   const { valid, results } = validate(fields, {
     rules: {
       fields: {},
-    }
+    },
   })
 
-  const expected = [
-    {
-      field: 'email',
-      valid: false,
-      message: 'No validation rules for field email',
-    }
-  ]
-
   expect(valid).toEqual(false)
-  expect(results).toEqual(expected)
+  expect(results).toMatchInlineSnapshot(`
+    Array [
+      Object {
+        "field": "email",
+        "message": "No validation rules for field 'email'",
+        "valid": false,
+        "value": "email@email.com",
+      },
+    ]
+  `)
 })

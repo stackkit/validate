@@ -7,8 +7,9 @@ const rules = {
   fields: {
     email: {
       validator: () => {
-        return email(value) && length(value, { max: 75 })
+        return length(value, { max: 75 }) && email(value)
       },
+      message: 'The given email address is invalid',
     },
     password: {
       validator: () => {

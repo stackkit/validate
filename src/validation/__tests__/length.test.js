@@ -4,7 +4,7 @@ const string = 'string'
 
 it('checks for the length of a min value', () => {
   const result = length(string, {
-    min: 4
+    min: 4,
   })
 
   expect(result).toEqual(true)
@@ -12,7 +12,7 @@ it('checks for the length of a min value', () => {
 
 it('checks for the length of a max value', () => {
   const result = length(string, {
-    max: 7
+    max: 7,
   })
 
   expect(result).toEqual(true)
@@ -37,7 +37,7 @@ it('returns false when the max length is not reached', () => {
 it('works with a min and a max value', () => {
   const result = length('strings', {
     min: 4,
-    max: 5
+    max: 5,
   })
 
   expect(result).toEqual(false)

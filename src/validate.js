@@ -1,36 +1,48 @@
-function validate (fields, { rules }) {
+function validate(fields, { rules }) {
   if (isEmpty(fields)) {
     return { valid: false, results: [] }
   }
 
   const checked = []
 
-  Object.keys(fields).forEach((field) => {
+  Object.keys(fields).forEach(field => {
     const rule = rules.fields[field]
 
     if (!rule) {
-      checked.push({ field, valid: false, message: `No validation rules for field ${field}`})
+      checked.push({
+        field,
+        value: fields[field],
+        valid: false,
+        message: `No validation rules for field '${field}'`,
+      })
       return
     }
 
     if (rule.validator(fields[field])) {
-      checked.push({ field, valid: true, message: '' })
+      checked.push({ field, value: fields[field], valid: true, message: '' })
     } else {
-      checked.push({ field, valid: false, message: rules.fields[field].message || 'Validation failed for field' })
+      checked.push({
+        field,
+        value: fields[field],
+        valid: false,
+        message:
+          rules.fields[field].message ||
+          `Validation failed for field '${field}'`,
+      })
     }
   })
 
   return {
-    valid: checked.every((current) => current.valid === true),
-    results: checked
+    valid: checked.every(current => current.valid === true),
+    results: checked,
   }
 }
 
 function isEmpty(obj) {
-  return Object.keys(obj).length === 0;
+  return Object.keys(obj).length === 0
 }
 
 module.exports = {
   validate,
-  ...require('./validation/index.js')
+  ...require('./validation/index.js'),
 }
