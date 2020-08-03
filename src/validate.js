@@ -1,6 +1,6 @@
 function validate (fields, { rules }) {
   if (isEmpty(fields)) {
-    return false
+    return { valid: false, results: [] }
   }
 
   const checked = []
