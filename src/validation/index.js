@@ -29,8 +29,13 @@ function length(x, { min, max }) {
   return false
 }
 
+function required(x) {
+  return x !== undefined && x !== null
+}
+
 module.exports = {
   email,
   length,
   number,
+  required
 }

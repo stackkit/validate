@@ -1,18 +1,30 @@
-const { validate } = require('../validate')
+const { validate, email, length, required } = require('../validate')
+
+const defaultRules = {
+  fields: {
+    email: {
+      validator: (value) => {
+        return length(value, { max: 75 }) && email(value)
+      },
+      message: 'The given email address is invalid',
+    },
+    password: {
+      validator: (value) => {
+        return length(value, { min: 4, max: 18 })
+      },
+    },
+    subscription: {
+      validator: (value) => {
+        return required(value)
+      }
+    }
+  }
+}
 
 it('initializes', () => {
-  const callback = jest.fn()
-
   const fields = {}
   const rules = {}
-
-  validate(
-    fields,
-    {
-      rules,
-    },
-    callback,
-  )
+  validate( fields, { rules, } )
 })
 
 it('calls the correct validation checks and calls them with the current value', () => {
@@ -49,26 +61,14 @@ it('calls the correct validation checks and calls them with the current value', 
   expect(passwordValidator).toBeCalledWith(password)
 })
 
-it('shows a message when a field is entered but there are no rules for it', () => {
+it('uses the given rules to validate against the fields', () => {
   const fields = {
-    email: 'email@email.com',
+    email: 'info@stackkit.io',
+    password: 'password',
+    subscription: true
   }
 
-  const { valid, results } = validate(fields, {
-    rules: {
-      fields: {},
-    },
-  })
-
-  expect(valid).toEqual(false)
-  expect(results).toMatchInlineSnapshot(`
-    Array [
-      Object {
-        "field": "email",
-        "message": "No validation rules for field 'email'",
-        "valid": false,
-        "value": "email@email.com",
-      },
-    ]
-  `)
+  const rules = defaultRules
+  const { valid } = validate( fields, { rules, } )
+  expect(valid).toEqual(true)
 })

@@ -3,22 +3,17 @@ function validate(fields, { rules }) {
     return { valid: false, results: [] }
   }
 
+  if (isEmpty(rules.fields)) {
+    return { valid: false, results: [] }
+  }
+
   const checked = []
 
-  Object.keys(fields).forEach(field => {
+  Object.keys(rules.fields).forEach((field) => {
+    const value = fields[field]
     const rule = rules.fields[field]
 
-    if (!rule) {
-      checked.push({
-        field,
-        value: fields[field],
-        valid: false,
-        message: `No validation rules for field '${field}'`,
-      })
-      return
-    }
-
-    if (rule.validator(fields[field])) {
+    if (rule.validator(value)) {
       checked.push({ field, value: fields[field], valid: true, message: '' })
     } else {
       checked.push({
