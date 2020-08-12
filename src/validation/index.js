@@ -1,10 +1,8 @@
 function number(x, { max, min } = {}) {
-  if (min || max) {
-    if (Number(x) === x) {
-      if (x >= min && x <= max) return true
-      if (x >= min && max === undefined) return true
-      if (x <= max && min === undefined) return true
-    }
+  if ((min || max) && Number(x) === x) {
+    if (x >= min && x <= max) return true
+    if (x >= min && max === undefined) return true
+    if (x <= max && min === undefined) return true
   }
 
   if (Number(x) === x && min === undefined && max === undefined) {

@@ -18,3 +18,10 @@ it('validates that a given number is higher then the min value', () => {
   expect(number(value, { min: 9 })).toEqual(true)
   expect(number(value, { min: 11 })).toEqual(false)
 })
+
+it('validates tht a given number is between the given range', () => {
+  const value = 10
+
+  expect(number(value, { min: 9, max: 11 })).toEqual(true)
+  expect(number(value, { min: 8, max: 9 })).toEqual(false)
+})
