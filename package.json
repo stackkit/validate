@@ -1,5 +1,5 @@
 {
-  "name": "validate",
+  "name": "@stackkit/validate",
   "version": "0.0.1",
   "main": "src/validate.js",
   "repository": "git@github.com:stackkit/validate.git",
