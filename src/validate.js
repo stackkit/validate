@@ -1,13 +1,9 @@
 function validate(fields, { rules }) {
-  if (isEmpty(fields)) {
-    return { valid: false, results: [] }
-  }
-
-  if (isEmpty(rules.fields)) {
-    return { valid: false, results: [] }
-  }
-
   const checked = []
+
+  if (!fields || !rules || !rules.fields ) {
+    return { valid: false, results: [] }
+  }
 
   Object.keys(rules.fields).forEach((field) => {
     const value = fields[field]
@@ -31,10 +27,6 @@ function validate(fields, { rules }) {
     valid: checked.every(current => current.valid === true),
     results: checked,
   }
-}
-
-function isEmpty(obj) {
-  return Object.keys(obj).length === 0
 }
 
 module.exports = {

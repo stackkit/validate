@@ -3,28 +3,38 @@ const { validate, email, length, required } = require('../validate')
 const defaultRules = {
   fields: {
     email: {
-      validator: (value) => {
+      validator: value => {
         return length(value, { max: 75 }) && email(value)
       },
       message: 'The given email address is invalid',
     },
     password: {
-      validator: (value) => {
+      validator: value => {
         return length(value, { min: 4, max: 18 })
       },
     },
     subscription: {
-      validator: (value) => {
+      validator: value => {
         return required(value)
-      }
-    }
-  }
+      },
+    },
+  },
 }
 
 it('initializes', () => {
   const fields = {}
   const rules = {}
-  validate( fields, { rules, } )
+  validate(fields, { rules })
+})
+
+it('returns invalid when there are no rules', () => {
+  const fields = {
+    password: 'homepage'
+  }
+  const rules = {}
+
+  const { valid } = validate(fields, { rules })
+  expect(valid).toEqual(false)
 })
 
 it('calls the correct validation checks and calls them with the current value', () => {
@@ -65,10 +75,43 @@ it('uses the given rules to validate against the fields', () => {
   const fields = {
     email: 'info@stackkit.io',
     password: 'password',
-    subscription: true
+    subscription: true,
   }
 
   const rules = defaultRules
-  const { valid } = validate( fields, { rules, } )
+  const { valid } = validate(fields, { rules })
   expect(valid).toEqual(true)
+})
+
+it('validates to false when one one of the validation rules returns false', () => {
+  const fields = {
+    email: 'info@stackkit.io',
+    password: 'password',
+  }
+
+  const rules = defaultRules
+  const { valid, results } = validate(fields, { rules })
+  expect(valid).toEqual(false)
+  expect(results).toMatchInlineSnapshot(`
+    Array [
+      Object {
+        "field": "email",
+        "message": "",
+        "valid": true,
+        "value": "info@stackkit.io",
+      },
+      Object {
+        "field": "password",
+        "message": "",
+        "valid": true,
+        "value": "password",
+      },
+      Object {
+        "field": "subscription",
+        "message": "Validation failed for field 'subscription'",
+        "valid": false,
+        "value": undefined,
+      },
+    ]
+  `)
 })
