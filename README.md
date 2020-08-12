@@ -1,5 +1,7 @@
 # Validate
 
+> **This package is build for node and can not be used into the browser yet**
+
 ```js
 const { validate, email, length, required } = require('validate')
 
