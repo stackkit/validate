@@ -43,3 +43,7 @@ No sanitizing has been done on the return value in the message function. It is y
 to use a library to achieve this.
 
 [dompurify](https://www.npmjs.com/package/dompurify)
+
+### Nodejs
+
+While working on this. I found this package [express-validator](https://github.com/express-validator/express-validator) it looks like a good option for validation inside nodejs express projects.
