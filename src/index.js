@@ -1,11 +1,11 @@
 function validate(fields, { rules }) {
   const checked = []
 
-  if (!fields || !rules || !rules.fields ) {
+  if (!fields || !rules || !rules.fields) {
     return { valid: false, results: [] }
   }
 
-  Object.keys(rules.fields).forEach((field) => {
+  Object.keys(rules.fields).forEach(field => {
     const value = fields[field]
     const rule = rules.fields[field]
 

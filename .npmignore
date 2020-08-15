@@ -1,0 +1,10 @@
+.DS_Store
+node_modules
+npm-debug.log
+src/
+*.test.js
+coverage/
+rollup.config.js
+.gitignore
+.prettierrc
+jest.config.js

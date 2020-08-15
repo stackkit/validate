@@ -35,5 +35,5 @@ module.exports = {
   email,
   length,
   number,
-  required
+  required,
 }

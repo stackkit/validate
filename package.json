@@ -1,17 +1,24 @@
 {
   "name": "@stackkit/validate",
   "version": "0.0.1",
-  "main": "src/validate.js",
+  "main": "build/index.cjs.js",
+  "module": "build/index.esm.js",
+  "browser": "build/index.js",
   "repository": "git@github.com:stackkit/validate.git",
   "author": "larsvankleef <larsvankleef@outlook.com>",
   "license": "MIT",
   "scripts": {
     "test": "jest --coverage",
     "test:watch": "jest --watch",
-    "test:open": "open coverage/lcov-report/index.html"
+    "test:open": "open coverage/lcov-report/index.html",
+    "build": "npx rollup -c"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^14.0.0",
+    "@rollup/plugin-node-resolve": "^8.4.0",
     "jest": "^26.2.2",
-    "prettier": "^2.0.5"
+    "prettier": "^2.0.5",
+    "rollup": "^2.23.1",
+    "rollup-plugin-filesize": "^9.0.2"
   }
 }
