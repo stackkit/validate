@@ -1,6 +1,6 @@
 {
   "name": "@stackkit/validate",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "build/index.cjs.js",
   "module": "build/index.esm.js",
   "browser": "build/index.js",
