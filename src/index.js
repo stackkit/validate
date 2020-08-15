@@ -12,13 +12,19 @@ function validate(fields, { rules }) {
     if (rule.validator(value)) {
       checked.push({ field, value: fields[field], valid: true, message: '' })
     } else {
+      const value = fields[field]
+
+      const message = compileTheMessage({
+        message: rules.fields[field].message,
+        value,
+        field,
+      })
+
       checked.push({
         field,
-        value: fields[field],
+        value,
         valid: false,
-        message:
-          rules.fields[field].message ||
-          `Validation failed for field '${field}'`,
+        message,
       })
     }
   })
@@ -27,6 +33,20 @@ function validate(fields, { rules }) {
     valid: checked.every(current => current.valid === true),
     results: checked,
   }
+}
+
+function compileTheMessage({ message, value, field }) {
+  const defaultOutputString = `Validation failed for field '${field}'`
+
+  if (!message) return defaultOutputString
+  if (typeof message === 'function') {
+    const output = message({ field, value })
+
+    if (!output) return defaultOutputString
+    return output
+  }
+
+  return message
 }
 
 module.exports = {

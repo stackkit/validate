@@ -1,4 +1,4 @@
-const { validate, email, length, required } = require('../validate')
+const { validate, email, length, required } = require('../index')
 
 const defaultRules = {
   fields: {
@@ -29,7 +29,7 @@ it('initializes', () => {
 
 it('returns invalid when there are no rules', () => {
   const fields = {
-    password: 'homepage'
+    password: 'homepage',
   }
   const rules = {}
 
@@ -114,4 +114,38 @@ it('validates to false when one one of the validation rules returns false', () =
       },
     ]
   `)
+})
+
+it('supports the message object to be a function and then calls it with the field and the value', () => {
+  const email = 'email@email.com'
+  const validator = jest.fn(() => false)
+  const message = jest.fn(
+    ({ field, value }) => `The field ${field} is incorrect with value ${value}`,
+  )
+  const passwordMessage = 'it works with a string to'
+
+  const fields = { email, password: 'password', subscription: true }
+  const rules = {
+    fields: {
+      email: { validator, message },
+      password: { validator, message: passwordMessage },
+      subscription: { validator, message: () => undefined },
+    },
+  }
+
+  const { valid, results } = validate(fields, { rules })
+
+  expect(message).toBeCalledTimes(1)
+  expect(message).toBeCalledWith({ field: 'email', value: email })
+  expect(valid).toEqual(false)
+
+  expect(results.find(item => item.field === 'email').message).toEqual(
+    `The field email is incorrect with value ${email}`,
+  )
+  expect(results.find(item => item.field === 'password').message).toEqual(
+    passwordMessage,
+  )
+  expect(results.find(item => item.field === 'subscription').message).toEqual(
+    "Validation failed for field 'subscription'",
+  )
 })
