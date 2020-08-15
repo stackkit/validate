@@ -37,7 +37,7 @@ const { valid } = validate(fields, {
 })
 ```
 
-## Good the now.
+## Good the know.
 
 No sanitizing has been done on the return value in the message function. It is your job
 to use a library to achieve this.
